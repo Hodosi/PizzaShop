@@ -10,21 +10,22 @@ import java.util.Optional;
 public class PaymentAlert {
     private PaymentService service;
 
+    private static final String DELIMITATOR = "--------------------------";
     public PaymentAlert(PaymentService service){
         this.service=service;
     }
 
     public void cardPayment() {
-        System.out.println("--------------------------");
+        System.out.println(DELIMITATOR);
         System.out.println("Paying by card...");
         System.out.println("Please insert your card!");
-        System.out.println("--------------------------");
+        System.out.println(DELIMITATOR);
     }
     public void cashPayment() {
-        System.out.println("--------------------------");
+        System.out.println(DELIMITATOR);
         System.out.println("Paying cash...");
         System.out.println("Please show the cash...!");
-        System.out.println("--------------------------");
+        System.out.println(DELIMITATOR);
     }
     public void cancelPayment() {
         System.out.println("--------------------------");
@@ -41,10 +42,10 @@ public class PaymentAlert {
         ButtonType cancel = new ButtonType("Cancel");
         paymentAlert.getButtonTypes().setAll(cardPayment, cashPayment, cancel);
         Optional<ButtonType> result = paymentAlert.showAndWait();
-        if (result.get() == cardPayment) {
+        if (result.isPresent() && result.get() == cardPayment) {
             cardPayment();
             service.addPayment(tableNumber, PaymentType.Card,totalAmount);
-        } else if (result.get() == cashPayment) {
+        } else if (result.isPresent() && result.get() == cashPayment) {
             cashPayment();
             service.addPayment(tableNumber, PaymentType.Cash,totalAmount);
         } else {
