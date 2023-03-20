@@ -1,33 +1,31 @@
-package pizzashop.service;
+package pizzashop.gui;
 
 import javafx.scene.control.Alert;
 import javafx.scene.control.ButtonType;
 import pizzashop.model.PaymentType;
+import pizzashop.service.PaymentService;
 
 import java.util.Optional;
 
-public class PaymentAlert implements PaymentOperation {
-    private PizzaService service;
+public class PaymentAlert {
+    private PaymentService service;
 
-    public PaymentAlert(PizzaService service){
+    public PaymentAlert(PaymentService service){
         this.service=service;
     }
 
-    @Override
     public void cardPayment() {
         System.out.println("--------------------------");
         System.out.println("Paying by card...");
         System.out.println("Please insert your card!");
         System.out.println("--------------------------");
     }
-    @Override
     public void cashPayment() {
         System.out.println("--------------------------");
         System.out.println("Paying cash...");
         System.out.println("Please show the cash...!");
         System.out.println("--------------------------");
     }
-    @Override
     public void cancelPayment() {
         System.out.println("--------------------------");
         System.out.println("Payment choice needed...");

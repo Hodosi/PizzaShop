@@ -8,10 +8,9 @@ import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.stage.Stage;
-import pizzashop.model.MenuDataModel;
-import pizzashop.gui.OrdersGUI;
-import pizzashop.service.PaymentAlert;
-import pizzashop.service.PizzaService;
+import pizzashop.model.MenuData;
+import pizzashop.gui.PaymentAlert;
+import pizzashop.service.PaymentService;
 
 import java.util.Calendar;
 import java.util.List;
@@ -53,18 +52,18 @@ public class OrdersGUIController {
         this.totalAmount = totalAmount;
     }
 
-    private PizzaService service;
+    private PaymentService service;
     private int tableNumber;
 
     public ObservableList<String> observableList;
-    private TableView<MenuDataModel> table = new TableView<MenuDataModel>();
-    private ObservableList<MenuDataModel> menuData;// = FXCollections.observableArrayList();
+    private TableView<MenuData> table = new TableView<MenuData>();
+    private ObservableList<MenuData> menuData;// = FXCollections.observableArrayList();
     private Calendar now = Calendar.getInstance();
     private static double totalAmount;
 
     public OrdersGUIController(){ }
 
-    public void setService(PizzaService service, int tableNumber){
+    public void setService(PaymentService service, int tableNumber){
         this.service=service;
         this.tableNumber=tableNumber;
         initData();
@@ -113,16 +112,16 @@ public class OrdersGUIController {
         //populate table view with menuData from OrderGUI
         table.setEditable(true);
         tableMenuItem.setCellValueFactory(
-                new PropertyValueFactory<MenuDataModel, String>("menuItem"));
+                new PropertyValueFactory<MenuData, String>("menuItem"));
         tablePrice.setCellValueFactory(
-                new PropertyValueFactory<MenuDataModel, Double>("price"));
+                new PropertyValueFactory<MenuData, Double>("price"));
         tableQuantity.setCellValueFactory(
-                new PropertyValueFactory<MenuDataModel, Integer>("quantity"));
+                new PropertyValueFactory<MenuData, Integer>("quantity"));
 
         //bind pizzaTypeLabel and quantity combo box with the selection on the table view
-        orderTable.getSelectionModel().selectedItemProperty().addListener(new ChangeListener<MenuDataModel>() {
+        orderTable.getSelectionModel().selectedItemProperty().addListener(new ChangeListener<MenuData>() {
         @Override
-        public void changed(ObservableValue<? extends MenuDataModel> observable, MenuDataModel oldValue, MenuDataModel newValue) {
+        public void changed(ObservableValue<? extends MenuData> observable, MenuData oldValue, MenuData newValue) {
            pizzaTypeLabel.textProperty().bind(newValue.menuItemProperty());
               }
         });
@@ -134,9 +133,9 @@ public class OrdersGUIController {
 
         //Controller for Add to order Button
         addToOrder.setOnAction(event -> {
-            orderTable.getSelectionModel().selectedItemProperty().addListener(new ChangeListener<MenuDataModel>(){
+            orderTable.getSelectionModel().selectedItemProperty().addListener(new ChangeListener<MenuData>(){
             @Override
-            public void changed(ObservableValue<? extends MenuDataModel> observable, MenuDataModel oldValue, MenuDataModel newValue){
+            public void changed(ObservableValue<? extends MenuData> observable, MenuData oldValue, MenuData newValue){
             oldValue.setQuantity(orderQuantity.getValue());
             orderTable.getSelectionModel().selectedItemProperty().removeListener(this);
                 }
