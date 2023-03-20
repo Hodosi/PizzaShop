@@ -4,6 +4,7 @@ import javafx.application.Platform;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.ListView;
 import java.util.Calendar;
@@ -49,16 +50,29 @@ public class KitchenGUIController {
         cook.setOnAction(event -> {
             selectedOrder = kitchenOrdersList.getSelectionModel().getSelectedItem();
             kitchenOrdersList.getItems().remove(selectedOrder);
-            kitchenOrdersList.getItems().add(selectedOrder.toString()
-                     .concat(" Cooking started at: ").toUpperCase()
-                     .concat(now.get(Calendar.HOUR)+":"+now.get(Calendar.MINUTE)));
+            if(selectedOrder != null) {
+                kitchenOrdersList.getItems().add(selectedOrder.toString()
+                        .concat(" Cooking started at: ").toUpperCase()
+                        .concat(now.get(Calendar.HOUR)+":"+now.get(Calendar.MINUTE)));
+            } else {
+                Alert paymentAlert = new Alert(Alert.AlertType.WARNING);
+                paymentAlert.setTitle("Warning");
+                paymentAlert.setContentText("Please select an order!");
+            }
+
         });
         //Controller for Ready Button
         ready.setOnAction(event -> {
             selectedOrder = kitchenOrdersList.getSelectionModel().getSelectedItem();
             kitchenOrdersList.getItems().remove(selectedOrder);
-            extractedTableNumberString = selectedOrder.toString().subSequence(5, 6).toString();
-            extractedTableNumberInteger = Integer.valueOf(extractedTableNumberString);
+            if(selectedOrder != null) {
+                extractedTableNumberString = selectedOrder.toString().subSequence(5, 6).toString();
+                extractedTableNumberInteger = Integer.valueOf(extractedTableNumberString);
+            } else {
+                Alert paymentAlert = new Alert(Alert.AlertType.WARNING);
+                paymentAlert.setTitle("Warning");
+                paymentAlert.setContentText("Please select an order!");
+            }
             System.out.println("--------------------------");
             System.out.println("Table " + extractedTableNumberInteger +" ready at: " + now.get(Calendar.HOUR)+":"+now.get(Calendar.MINUTE));
             System.out.println("--------------------------");
