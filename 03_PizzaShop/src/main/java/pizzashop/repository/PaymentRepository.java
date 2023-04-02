@@ -80,7 +80,7 @@ public class PaymentRepository {
         }
     }
 
-    private boolean validatePayment(final Payment payment) throws Exception {
+    private void validatePayment(final Payment payment) throws Exception {
         final StringBuilder stringBuilder = new StringBuilder();
 
         final int masa = payment.getTableNumber();
@@ -97,6 +97,5 @@ public class PaymentRepository {
         if(exception.length() > 0){
             throw new Exception(exception);
         }
-        return true;
     }
 }
