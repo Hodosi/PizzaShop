@@ -32,7 +32,7 @@ public class PaymentAlert {
         System.out.println("Payment choice needed...");
         System.out.println("--------------------------");
     }
-      public void showPaymentAlert(int tableNumber, double totalAmount ) {
+      public void showPaymentAlert(int tableNumber, double totalAmount ) throws Exception {
         Alert paymentAlert = new Alert(Alert.AlertType.CONFIRMATION);
         paymentAlert.setTitle("Payment for Table "+tableNumber);
         paymentAlert.setHeaderText("Total amount: " + totalAmount);

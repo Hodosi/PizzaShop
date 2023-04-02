@@ -17,6 +17,11 @@ public class PaymentRepository {
         readPayments();
     }
 
+    public PaymentRepository(final String newFilename){
+        this.paymentList = new ArrayList<>();
+        filename = newFilename;
+    }
+
     private void readPayments(){
         //ClassLoader classLoader = PaymentRepository.class.getClassLoader();
         File file = new File(filename);
@@ -47,7 +52,8 @@ public class PaymentRepository {
         return item;
     }
 
-    public void add(Payment payment){
+    public void add(Payment payment) throws Exception {
+        validatePayment(payment);
         paymentList.add(payment);
         writeAll();
     }
@@ -74,4 +80,23 @@ public class PaymentRepository {
         }
     }
 
+    private boolean validatePayment(final Payment payment) throws Exception {
+        final StringBuilder stringBuilder = new StringBuilder();
+
+        final int masa = payment.getTableNumber();
+        if(masa < 1 || masa > 8){
+            stringBuilder.append("invalid table! ");
+        }
+
+        final double valaore = payment.getAmount();
+        if(valaore <= 0){
+            stringBuilder.append("invalid value! ");
+        }
+
+        final String exception = stringBuilder.toString();
+        if(exception.length() > 0){
+            throw new Exception(exception);
+        }
+        return true;
+    }
 }
