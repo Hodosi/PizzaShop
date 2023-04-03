@@ -17,7 +17,7 @@ class PaymentRepositoryTest {
     final String filename = "data/testPayments.txt";
 
     @BeforeEach
-    void tearDown() {
+    void setUp() {
         paymentRepository = new PaymentRepository(filename);
     }
 
@@ -25,7 +25,6 @@ class PaymentRepositoryTest {
     @DisplayName("TC1_ECP")
     @Tag("ECP")
     @Order(1)
-//    @Disabled
     void add_TC1_ECP() {
         int masa = 2;
         final PaymentType tip = PaymentType.Cash;
@@ -34,6 +33,7 @@ class PaymentRepositoryTest {
         final Payment payment = new Payment(masa, tip, valoare);
         try {
             paymentRepository.add(payment);
+            assert false;
         } catch (Exception exception) {
             assertEquals("invalid value! ", exception.getMessage());
         }
@@ -43,6 +43,7 @@ class PaymentRepositoryTest {
     @DisplayName("TC2_ECP")
     @Tag("ECP")
     @Order(2)
+//    @Disabled
     void add_TC2_ECP() {
         int masa = 3;
         final PaymentType tip = PaymentType.Card;
@@ -73,6 +74,7 @@ class PaymentRepositoryTest {
         final Payment payment = new Payment(masa, tip, valoare);
         try {
             paymentRepository.add(payment);
+            assert false;
         } catch (Exception exception) {
             assertEquals("invalid table! ", exception.getMessage());
         }
@@ -90,6 +92,7 @@ class PaymentRepositoryTest {
         final Payment payment = new Payment(masa, tip, valoare);
         try {
             paymentRepository.add(payment);
+            assert false;
         } catch (Exception exception) {
             assertEquals("invalid table! ", exception.getMessage());
         }
@@ -107,6 +110,7 @@ class PaymentRepositoryTest {
         final Payment payment = new Payment(masa, tip, valoare);
         try {
             paymentRepository.add(payment);
+            assert false;
         } catch (Exception exception) {
             assertEquals("invalid table! invalid value! ", exception.getMessage());
         }
@@ -116,6 +120,7 @@ class PaymentRepositoryTest {
     @DisplayName("TC3_BVA")
     @Tag("BVA")
     @Order(6)
+//    @Disabled
     void add_TC3_BVA() {
         int masa = 1;
         PaymentType tip = PaymentType.Cash;
@@ -138,6 +143,7 @@ class PaymentRepositoryTest {
     @DisplayName("TC4_BVA")
     @Tag("BVA")
     @Order(7)
+//    @Disabled
     void add_TC4_BVA() {
         int masa = 8;
         PaymentType tip = PaymentType.Card;
