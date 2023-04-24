@@ -22,6 +22,14 @@ public class PaymentRepository {
         filename = newFilename;
     }
 
+    public PaymentRepository(Boolean ok) {
+        this.paymentList = null;
+    }
+
+    public PaymentRepository(final List<Payment> paymentList) {
+        this.paymentList = paymentList;
+    }
+
     private void readPayments(){
         //ClassLoader classLoader = PaymentRepository.class.getClassLoader();
         File file = new File(filename);

@@ -16,6 +16,11 @@ import pizzashop.repository.MenuRepository;
 import pizzashop.repository.PaymentRepository;
 import pizzashop.service.PaymentService;
 
+import java.io.BufferedReader;
+import java.io.FileReader;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.time.LocalDateTime;
 import java.util.Optional;
 
 public class Main extends Application {
@@ -42,8 +47,34 @@ public class Main extends Application {
                 Optional<ButtonType> result = exitAlert.showAndWait();
                 if (result.get() == ButtonType.YES){
                     //Stage stage = (Stage) this.getScene().getWindow();
-                    System.out.println("Incasari cash: "+service.getTotalAmount(PaymentType.Cash));
-                    System.out.println("Incasari card: "+service.getTotalAmount(PaymentType.Card));
+                    double cash = service.getTotalAmount(PaymentType.Cash);
+                    double card = service.getTotalAmount(PaymentType.Card);
+
+                    System.out.println("Incasari cash: "+ cash);
+                    System.out.println("Incasari card: "+ card);
+
+                    String header = "Incasari cash, Incasari card, Data";
+
+                    String csvFilePath = "data/register.csv";
+                    try(FileWriter csvWriter = new FileWriter(csvFilePath, true)) {
+                        try (BufferedReader reader = new BufferedReader(new FileReader(csvFilePath))) {
+                            String line = reader.readLine();
+                            if (line != null) {
+                                if (!line.contains(header)) {
+                                    csvWriter.write(header + "\n");
+                                }
+                            } else {
+                                csvWriter.write(header + "\n");
+                            }
+                        } catch (IOException e) {
+                            e.printStackTrace();
+                        }
+
+                        csvWriter.write("" + cash + "," + card + "," + LocalDateTime.now().toString().substring(0,10) + "\n");
+
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
 
                     primaryStage.close();
                 }
@@ -62,6 +93,10 @@ public class Main extends Application {
         primaryStage.show();
         KitchenGUI kitchenGUI = new KitchenGUI();
         kitchenGUI.KitchenGUI();
+    }
+
+    public static void writeToCsv() {
+
     }
 
     public static void main(String[] args) { launch(args);

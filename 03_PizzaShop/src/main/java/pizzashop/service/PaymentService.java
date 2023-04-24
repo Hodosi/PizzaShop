@@ -27,15 +27,21 @@ public class PaymentService {
         payRepo.add(payment);
     }
 
-    public double getTotalAmount(PaymentType type){
-        double total=0.0d;
-        List<Payment> l=getPayments();
-        if ((l==null) ||(l.size()==0)) return total;
-        for (Payment p:l){
-            if (p.getType().equals(type))
-                total+=p.getAmount();
+    public double getTotalAmount(PaymentType type) {
+        double total = 0.0d;
+        List<Payment> l = getPayments();
+        if (l != null) {
+            if (!l.isEmpty()) {
+                int i = 0;
+                while (i < l.size()) {
+                    Payment p = l.get(i);
+                    if (p.getType().equals(type)) {
+                        total += p.getAmount();
+                    }
+                    i++;
+                }
+            }
         }
         return total;
     }
-
 }
